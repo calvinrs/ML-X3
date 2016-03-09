@@ -21,13 +21,21 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% map X(a1) to a2
 
+% Add ones to the X data matrix
+Xbias = [ones(m, 1) X];
 
+a2 = sigmoid(Xbias * Theta1');
 
+%map a2 to a3(p)
 
+a2bias = [ones(m, 1) a2];
+a3 = sigmoid(a2bias * Theta2');
 
+[maxVal, maxIndex] =  max (a3, [], 2);
 
-
+p = maxIndex;
 
 % =========================================================================
 
