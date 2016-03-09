@@ -37,12 +37,28 @@ grad = zeros(size(theta));
 %
 
 
+%calc the hypothesis function for all X;
+
+H = sigmoid(X * theta);
+
+%split the summation in the cost fun
+% log already arrayfun's
+pJ = y' * log(H); %sum of all observed * 
+nJ = (1 - y)' * log(1- H);
+
+%now with regularisation term!
+thetaJtoM =  [0; theta([2:end],:)]; % as theta(0) = 0; don't regularise bias term
+sumSqthetaJtoM = thetaJtoM' * thetaJtoM;
+
+J = ( (-1 / m) * (pJ + nJ) )+ ((lambda/(2*m)) * sumSqthetaJtoM);
 
 
+% GRADIENTS
 
-
-
-
+%diff obs. - actual
+D = H - y;
+%gradients + regularisation term (0 for first coeff.)
+grad = ((1 /m) * (X' * D))+ ((lambda/m) * thetaJtoM);
 
 
 % =============================================================
